@@ -6,8 +6,10 @@
 #include "DataTree.h"
 #include "Menu.h"
 #include "ctime"
+#include <chrono> 
 
 using namespace std;
+using namespace std::chrono;
 
 // Reading User file data
 string readFile()
@@ -100,7 +102,11 @@ int main()
 	string fileString = "";
 	DataTree *Tree = new DataTree;
 	fileString = readFile();
+	auto start = high_resolution_clock::now();
 	SeperateFile(fileString,Tree);
+	auto stop = high_resolution_clock::now();
+	auto duration = duration_cast<microseconds>(stop - start);
+	cout << "The time used for excution is: " << duration.count() << " microseconds" << endl;
 
 	int choice = 0;
 	// Exit the Program by inputting -1
@@ -114,13 +120,22 @@ int main()
 			//Deletion of old data
 			T = Tree->root;
 			Tree->DeleteTotal = 0;
+			auto start = high_resolution_clock::now();
 			Tree->PostOrderTreeDeletion(T);
 			cout << "There are total of " << Tree->DeleteTotal << " data deleted!\n\n";
+			auto stop = high_resolution_clock::now();
+			auto duration = duration_cast<microseconds>(stop - start);
+			cout << "The time used for excution is: " << duration.count() << " microseconds" << endl;
+
 			// Insertion of new dataset
 			string fileString = "";
 			DataTree* Tree = new DataTree;
 			fileString = readFile();
+			auto start = high_resolution_clock::now();
 			SeperateFile(fileString, Tree);
+			auto stop = high_resolution_clock::now();
+			auto duration = duration_cast<microseconds>(stop - start);
+			cout << "The time used for excution is: " << duration.count() << " microseconds" << endl;
 		}
 		// Deletion of record(s)
 		else if (choice == 2)
@@ -132,7 +147,11 @@ int main()
 				cout << "Please type in the Phone Number in numbers ONLY (eg. 12345678900: ";
 				cin >> Phone;	
 				T = Tree->root;
+				auto start = high_resolution_clock::now();
 				Tree->PhoneDeleteNode(T,Phone);
+				auto stop = high_resolution_clock::now();
+				auto duration = duration_cast<microseconds>(stop - start);
+				cout << "The time used for excution is: " << duration.count() << " microseconds" << endl;
 			}
 			else if (choice == 2)
 			{
@@ -140,8 +159,12 @@ int main()
 				cin >> str1;
 				T = Tree->root;
 				Tree->DeleteTotal = 0;
-				//Tree->PostOrderCountrySearch(T, str1);
+				auto start = high_resolution_clock::now();
+				Tree->PostOrderCountrySearch(T, str1);
 				cout << "There are total of " << Tree->DeleteTotal << " data deleted!\n\n";
+				auto stop = high_resolution_clock::now();
+				auto duration = duration_cast<microseconds>(stop - start);
+				cout << "The time used for excution is: " << duration.count() << " microseconds" << endl;
 			}
 			else
 				cout << "Invalid input! \n";
@@ -159,28 +182,44 @@ int main()
 				if (choice == 1)
 				{
 					T = Tree->root;
+					auto start = high_resolution_clock::now();
 					Tree->PhoneSearch(T, Phone);
+					auto stop = high_resolution_clock::now();
+					auto duration = duration_cast<microseconds>(stop - start);
+					cout << "The time used for excution is: " << duration.count() << " microseconds" << endl;
 				}
 				if (choice == 5)
 				{
 					cout << "Please type in the Skills: ";
 					cin >> str1;
 					T = Tree->root;
+					auto start = high_resolution_clock::now();
 					Tree->DoubleSearchPhone(T, Phone, str1, choice);
+					auto stop = high_resolution_clock::now();
+					auto duration = duration_cast<microseconds>(stop - start);
+					cout << "The time used for excution is: " << duration.count() << " microseconds" << endl;
 				}
 				else if (choice == 6)
 				{
 					cout << "Please type in the Job Title: ";
 					cin >> str1;
 					T = Tree->root;
+					auto start = high_resolution_clock::now();
 					Tree->DoubleSearchPhone(T, Phone, str1, choice);
+					auto stop = high_resolution_clock::now();
+					auto duration = duration_cast<microseconds>(stop - start);
+					cout << "The time used for excution is: " << duration.count() << " microseconds" << endl;
 				}
 				else if (choice == 7)
 				{
 					cout << "Please type in the Country: ";
 					cin >> str1;
 					T = Tree->root;
+					auto start = high_resolution_clock::now();
 					Tree->DoubleSearchPhone(T, Phone, str1, choice);
+					auto stop = high_resolution_clock::now();
+					auto duration = duration_cast<microseconds>(stop - start);
+					cout << "The time used for excution is: " << duration.count() << " microseconds" << endl;
 				}
 			}
 			// Searching Skills /+ 1 attribute
@@ -197,14 +236,22 @@ int main()
 					cout << "Please type in the Job Title: ";
 					cin >> str2;
 					T = Tree->root;
+					auto start = high_resolution_clock::now();
 					Tree->DoubleSearchXPhone(T, str1, str2, choice);
+					auto stop = high_resolution_clock::now();
+					auto duration = duration_cast<microseconds>(stop - start);
+					cout << "The time used for excution is: " << duration.count() << " microseconds" << endl;
 				}
 				else if (choice == 9)
 				{
 					cout << "Please type in the Country: ";
 					cin >> str2;
 					T = Tree->root;
+					auto start = high_resolution_clock::now();
 					Tree->DoubleSearchXPhone(T, str1, str2, choice);
+					auto stop = high_resolution_clock::now();
+					auto duration = duration_cast<microseconds>(stop - start);
+					cout << "The time used for excution is: " << duration.count() << " microseconds" << endl;
 				}
 			}
 			// Searching Job Title /+ Country
@@ -214,14 +261,22 @@ int main()
 				if (choice == 3)
 				{
 					T = Tree->root;
+					auto start = high_resolution_clock::now();
 					Tree->JobSearch(T, str1);
+					auto stop = high_resolution_clock::now();
+					auto duration = duration_cast<microseconds>(stop - start);
+					cout << "The time used for excution is: " << duration.count() << " microseconds" << endl;
 				}
 				else if (choice == 10)
 				{
 					cout << "Please type in the Country: ";
 					cin >> str2;
 					T = Tree->root;
+					auto start = high_resolution_clock::now();
 					Tree->DoubleSearchXPhone(T, str1, str2, choice);
+					auto stop = high_resolution_clock::now();
+					auto duration = duration_cast<microseconds>(stop - start);
+					cout << "The time used for excution is: " << duration.count() << " microseconds" << endl;
 				}
 			}
 			//Searching Country
@@ -229,7 +284,11 @@ int main()
 			{
 				cin >> str1;
 				T = Tree->root;
+				auto start = high_resolution_clock::now();
 				Tree->CountrySearch(T, str1);
+				auto stop = high_resolution_clock::now();
+				auto duration = duration_cast<microseconds>(stop - start);
+				cout << "The time used for excution is: " << duration.count() << " microseconds" << endl;
 			}
 			else
 				cout << "Invalid Input! \n";
