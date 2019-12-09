@@ -63,6 +63,46 @@ DataNode* DataTree::GetRoot()
 	return root;
 }
 
+DataNode* DataTree::rightRotate(DataNode* y)
+{
+	DataNode* x = y->Left;
+	DataNode* T2 = x->Right;
+
+	// Perform rotation  
+	x->Right = y;
+	y->Left = T2;
+
+	// Update heights  
+	y->height = max(height(y->Left),
+		height(y->Right)) + 1;
+	x->height = max(height(x->Left),
+		height(x->Right)) + 1;
+
+	// Return new root  
+	return x;
+}
+
+// A utility function to left  
+// rotate subtree rooted with x  
+// See the diagram given above.  
+DataNode* DataTree::leftRotate(DataNode* x)
+{
+	DataNode* y = x->Right;
+	DataNode* T2 = y->Left;
+
+	// Perform rotation  
+	y->Left = x;
+	x->Right = T2;
+
+	// Update heights  
+	x->height = max(height(x->Left),
+		height(x->Right)) + 1;
+	y->height = max(height(y->Left),
+		height(y->Right)) + 1;
+
+	// Return new root  
+	return y;
+}
 DataNode* DataTree::SingleRotateWithLeft(DataNode* k2)
 {
 	DataNode* k1;
@@ -296,27 +336,27 @@ DataNode* DataTree::CountryDeleteNode(DataNode* n, string country)
 	// Left Left Case
 	if (Balance > 1 &&
 		GetBalance(n->Left) >= 0)
-		return SingleRotateWithRight(n);
+		return rightRotate(n);
 
 	// Left Right Case
 	if (Balance > 1 &&
 		GetBalance(n->Left) < 0)
 	{
-		n->Left = SingleRotateWithLeft(n->Left);
-		return SingleRotateWithRight(n);
+		n->Left = leftRotate(n->Left);
+		return rightRotate(n);
 	}
 
 	// Right Right Case
 	if (Balance < -1 &&
 		GetBalance(n->Right) <= 0)
-		return SingleRotateWithLeft(n);
+		return leftRotate(n);
 
 	// Right Left Case
 	if (Balance < -1 &&
 		GetBalance(n->Right) > 0)
 	{
-		n->Right = SingleRotateWithRight(n->Right);
-		return SingleRotateWithLeft(n);
+		n->Right = rightRotate(n->Right);
+		return leftRotate(n);
 	}
 
 	return n;
