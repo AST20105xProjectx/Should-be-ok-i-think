@@ -3,6 +3,7 @@
 #include <string>
 #include "DataNode.h"
 #include "DataTree.h"
+#include<time.h>
 
 using namespace std;
 
@@ -144,7 +145,7 @@ DataNode* DataTree::InsertNode(string str1,string str2, string str3, string str4
 
 DataNode* DataTree::PhoneDeleteNode(DataNode* n, long long PhoneNum)
 {
-
+	clock_t tStart = clock();
 	// Standard Deletion
 	if (n == NULL)
 		return n;
@@ -232,9 +233,10 @@ DataNode* DataTree::PhoneDeleteNode(DataNode* n, long long PhoneNum)
 	}
 
 	return n;
+	//cout << "Time taken:" << (double)(clock() - tStart) / CLOCKS_PER_SEC << "s" << endl;
 }
 
-/*DataNode* DataTree::CountryDeleteNode(DataNode* n, string country)
+DataNode* DataTree::CountryDeleteNode(DataNode* n, string country)
 {
 
 	// Standard Deletion
@@ -337,10 +339,11 @@ DataNode* DataTree::PostOrderCountrySearch(DataNode* Target, string country)
 
 	}
 	return Target;
-}*/
+}
 
 void DataTree::PhoneSearch(DataNode* Target,long long PhoneNum)
 {
+	clock_t tStart = clock();
 	if (Target != NULL)
 	{
 		if (Target->Code == PhoneNum)
@@ -351,10 +354,12 @@ void DataTree::PhoneSearch(DataNode* Target,long long PhoneNum)
 		PhoneSearch(Target->Left,PhoneNum);
 		PhoneSearch(Target->Right,PhoneNum);
 	}
+	//cout << "Time taken:" << (double)(clock() - tStart) / CLOCKS_PER_SEC << "s" << endl;
 }
 
 void DataTree::SkillsSearch(DataNode* Target, string skills)
 {
+	clock_t tStart = clock();
 	if (Target != NULL)
 	{
 		if (Target->Skills == skills)
@@ -365,10 +370,12 @@ void DataTree::SkillsSearch(DataNode* Target, string skills)
 		SkillsSearch(Target->Left, skills);
 		SkillsSearch(Target->Right, skills);
 	}
+	//cout << "Time taken:" << (double)(clock() - tStart) / CLOCKS_PER_SEC << "s" << endl;
 }
 
 void DataTree::JobSearch(DataNode* Target, string Job)
 {
+	clock_t tStart = clock();
 	if (Target != NULL)
 	{
 		if (Target->JobTitle == Job)
@@ -379,10 +386,13 @@ void DataTree::JobSearch(DataNode* Target, string Job)
 		JobSearch(Target->Left, Job);
 		JobSearch(Target->Right, Job);
 	}
+	//cout << "Time taken:" << (double)(clock() - tStart) / CLOCKS_PER_SEC << "s" << endl;
+
 }
 
 void DataTree::CountrySearch(DataNode* Target, string country)
 {
+	clock_t tStart = clock();
 	if (Target != NULL)
 	{
 		if (Target->Country == country)
@@ -393,10 +403,13 @@ void DataTree::CountrySearch(DataNode* Target, string country)
 		CountrySearch(Target->Left, country);
 		CountrySearch(Target->Right, country);
 	}
+	//cout << "Time taken:" << (double)(clock() - tStart) / CLOCKS_PER_SEC << "s" << endl;
+
 }
 
 void DataTree::DoubleSearchPhone(DataNode* Target, long long PhoneNum, string str, int choice)
 {
+	clock_t tStart = clock();
 	int control = 0;
 	if (Target != NULL)
 	{
@@ -433,10 +446,12 @@ void DataTree::DoubleSearchPhone(DataNode* Target, long long PhoneNum, string st
 			DoubleSearchPhone(Target->Right, PhoneNum, str, choice);
 		}
 	}
+	//cout << "Time taken:" << (double)(clock() - tStart) / CLOCKS_PER_SEC << "s" << endl;
 }
 
 void DataTree::DoubleSearchXPhone(DataNode* Target, string str1, string str2, int choice)
 {
+	clock_t tStart = clock();
 	int control = 0;
 	if (Target != NULL)
 	{
@@ -473,10 +488,12 @@ void DataTree::DoubleSearchXPhone(DataNode* Target, string str1, string str2, in
 			DoubleSearchXPhone(Target->Right, str1, str2, choice);
 		}
 	}
+	//cout << "Time taken:" << (double)(clock() - tStart) / CLOCKS_PER_SEC << "s" << endl;
 }
 
 void DataTree::PostOrderTreeDeletion(DataNode* Target)
 {
+	clock_t tStart = clock();
 	if (Target != NULL)
 	{
 		PostOrderTreeDeletion(Target->Left);
@@ -484,4 +501,6 @@ void DataTree::PostOrderTreeDeletion(DataNode* Target)
 		delete Target;
 		DeleteTotal++;
 	}
+	//cout << "Time taken:" << (double)(clock() - tStart) / CLOCKS_PER_SEC << "s" << endl;
+
 }

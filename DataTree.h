@@ -29,8 +29,8 @@ public:
 	DataNode* DoubleRotateWithRight(DataNode* k);
 	DataNode* InsertNode(string str1, string str2, string str3, string str4, string str5, string str6, string str7, string str8,DataNode *T,int x);
 	DataNode* PhoneDeleteNode(DataNode* n, long long PhoneNum);
-	//DataNode* CountryDeleteNode(DataNode* n, string country);
-	//DataNode* PostOrderCountrySearch(DataNode* Target, string country);
+	DataNode* CountryDeleteNode(DataNode* n, string country);
+	DataNode* PostOrderCountrySearch(DataNode* Target, string country);
 	void PhoneSearch(DataNode* Target, long long PhoneNum);
 	void SkillsSearch(DataNode* Target, string skills);
 	void JobSearch(DataNode* Target, string Job);

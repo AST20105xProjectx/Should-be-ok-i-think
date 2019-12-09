@@ -1,6 +1,8 @@
+
 //Chiu Tze To     SID: 55726127     LID: LA2
 #include <iostream>
 #include <fstream>
+#include <cstdio>
 #include <string>
 #include "DataNode.h"
 #include "DataTree.h"
@@ -41,7 +43,7 @@ string readFile()
 }
 
 // Seperate the long string into different attribute and store it in the Data Tree
-void SeperateFile(string fileString, DataTree* Tree)
+void SeperateFile(string fileString, DataTree * Tree)
 {
 	DataNode* T;
 	char* Ustr;
@@ -49,10 +51,10 @@ void SeperateFile(string fileString, DataTree* Tree)
 	int Control = 0;
 	string str1, str2, str3, str4, str5, str6, str7, str8;
 
-		char* word = new char[fileString.size() + 1];
-		fileString.copy(word, fileString.size() + 1);
-		word[fileString.size()] = '\0';
-		Ustr = strtok_s(word, "	", &Unstr);
+	char* word = new char[fileString.size() + 1];
+	fileString.copy(word, fileString.size() + 1);
+	word[fileString.size()] = '\0';
+	Ustr = strtok_s(word, "	", &Unstr);
 	while (Ustr != NULL)
 	{
 		switch (Control % 8)
@@ -81,7 +83,7 @@ void SeperateFile(string fileString, DataTree* Tree)
 			str8 = Ustr;
 			T = Tree->root;
 			int x = 0;
-			Tree->InsertNode(str1, str2, str3, str4, str5, str6, str7, str8,T,x);
+			Tree->InsertNode(str1, str2, str3, str4, str5, str6, str7, str8, T, x);
 			break;
 		}
 		Ustr = strtok_s(NULL, "	", &Unstr);
@@ -100,10 +102,10 @@ int main()
 	cout << "======================= \n";
 
 	string fileString = "";
-	DataTree *Tree = new DataTree;
+	DataTree* Tree = new DataTree;
 	fileString = readFile();
 	auto start = high_resolution_clock::now();
-	SeperateFile(fileString,Tree);
+	SeperateFile(fileString, Tree);
 	auto stop = high_resolution_clock::now();
 	auto duration = duration_cast<microseconds>(stop - start);
 	cout << "The time used for excution is: " << duration.count() << " microseconds" << endl;
@@ -131,10 +133,10 @@ int main()
 			string fileString = "";
 			DataTree* Tree = new DataTree;
 			fileString = readFile();
-			auto start = high_resolution_clock::now();
+			start = high_resolution_clock::now();
 			SeperateFile(fileString, Tree);
-			auto stop = high_resolution_clock::now();
-			auto duration = duration_cast<microseconds>(stop - start);
+			stop = high_resolution_clock::now();
+			duration = duration_cast<microseconds>(stop - start);
 			cout << "The time used for excution is: " << duration.count() << " microseconds" << endl;
 		}
 		// Deletion of record(s)
@@ -145,10 +147,10 @@ int main()
 			if (choice == 1)
 			{
 				cout << "Please type in the Phone Number in numbers ONLY (eg. 12345678900: ";
-				cin >> Phone;	
+				cin >> Phone;
 				T = Tree->root;
 				auto start = high_resolution_clock::now();
-				Tree->PhoneDeleteNode(T,Phone);
+				Tree->PhoneDeleteNode(T, Phone);
 				auto stop = high_resolution_clock::now();
 				auto duration = duration_cast<microseconds>(stop - start);
 				cout << "The time used for excution is: " << duration.count() << " microseconds" << endl;
@@ -156,7 +158,8 @@ int main()
 			else if (choice == 2)
 			{
 				cout << "Please type in the Country: ";
-				cin >> str1;
+				cin.ignore();
+				getline(cin, str1);
 				T = Tree->root;
 				Tree->DeleteTotal = 0;
 				auto start = high_resolution_clock::now();
@@ -191,7 +194,8 @@ int main()
 				if (choice == 5)
 				{
 					cout << "Please type in the Skills: ";
-					cin >> str1;
+					cin.ignore();
+					getline(cin, str1);
 					T = Tree->root;
 					auto start = high_resolution_clock::now();
 					Tree->DoubleSearchPhone(T, Phone, str1, choice);
@@ -202,6 +206,8 @@ int main()
 				else if (choice == 6)
 				{
 					cout << "Please type in the Job Title: ";
+					cin.ignore();
+					getline(cin, str1);
 					cin >> str1;
 					T = Tree->root;
 					auto start = high_resolution_clock::now();
@@ -213,7 +219,8 @@ int main()
 				else if (choice == 7)
 				{
 					cout << "Please type in the Country: ";
-					cin >> str1;
+					cin.ignore();
+					getline(cin, str1);
 					T = Tree->root;
 					auto start = high_resolution_clock::now();
 					Tree->DoubleSearchPhone(T, Phone, str1, choice);
@@ -225,7 +232,8 @@ int main()
 			// Searching Skills /+ 1 attribute
 			else if (choice == 2 || choice == 8 || choice == 9)
 			{
-				cin >> str1;
+				cin.ignore();
+				getline(cin,str1);
 				if (choice == 2)
 				{
 					T = Tree->root;
@@ -234,7 +242,8 @@ int main()
 				else if (choice == 8)
 				{
 					cout << "Please type in the Job Title: ";
-					cin >> str2;
+					cin.ignore();
+					getline(cin, str2);
 					T = Tree->root;
 					auto start = high_resolution_clock::now();
 					Tree->DoubleSearchXPhone(T, str1, str2, choice);
@@ -245,7 +254,8 @@ int main()
 				else if (choice == 9)
 				{
 					cout << "Please type in the Country: ";
-					cin >> str2;
+					cin.ignore();
+					getline(cin, str2);
 					T = Tree->root;
 					auto start = high_resolution_clock::now();
 					Tree->DoubleSearchXPhone(T, str1, str2, choice);
@@ -257,7 +267,8 @@ int main()
 			// Searching Job Title /+ Country
 			else if (choice == 3 || choice == 10)
 			{
-				cin >> str1;
+				cin.ignore();
+				getline(cin, str1);
 				if (choice == 3)
 				{
 					T = Tree->root;
@@ -270,7 +281,8 @@ int main()
 				else if (choice == 10)
 				{
 					cout << "Please type in the Country: ";
-					cin >> str2;
+					cin.ignore();
+					getline(cin, str2);
 					T = Tree->root;
 					auto start = high_resolution_clock::now();
 					Tree->DoubleSearchXPhone(T, str1, str2, choice);
@@ -282,7 +294,8 @@ int main()
 			//Searching Country
 			else if (choice == 4)
 			{
-				cin >> str1;
+				cin.ignore();
+				getline(cin, str1);
 				T = Tree->root;
 				auto start = high_resolution_clock::now();
 				Tree->CountrySearch(T, str1);
@@ -303,3 +316,4 @@ int main()
 	system("pause");
 	return 0;
 }
+

@@ -68,7 +68,7 @@ void Meun::Search2(int choice)
 	switch (choice)
 	{
 	case 1:
-		cout << "Please type in the Phone Number in numbers ONLY (eg. 12345678900: ";
+		cout << "Please type in the Phone Number in numbers ONLY (eg. 12345678900): ";
 		break;
 	case 2:
 		cout << "Please type in the Skills: ";
