@@ -9,7 +9,7 @@ using namespace std;
 
 DataTree::DataTree()
 {
-	root = temp = NULL ;
+	root = temp = NULL;
 	Total = 0;
 	DeleteTotal = 0;
 }
@@ -97,31 +97,27 @@ DataNode* DataTree::DoubleRotateWithRight(DataNode* k)
 	return SingleRotateWithRight(k);
 }
 
-DataNode* DataTree::InsertNode(string str1,string str2, string str3, string str4, string str5, string str6, string str7, string str8,DataNode* T, int x)
+DataNode* DataTree::InsertNode(string str1, string str2, string str3, string str4, string str5, string str6, string str7, string str8, DataNode* T)
 {
 	DataNode* newNode = new DataNode(str1, str2, str3, str4, str5, str6, str7, str8);
-	if (T == NULL) 
+	if (T == NULL)
 	{
 		T = newNode;
+		//cout << T->Code << endl;
 		if (T == NULL) {
 			cout << "Out of memory, Insert unsucessful! \n" << endl; exit(1);
 		}
-		else 
-		{ 
-		T->height = 0; T->Left = T->Right = NULL; 
-		Total++;
-		if (x == 0)
+		else
 		{
-			root = newNode;
-		}
+			T->height = 0; T->Left = T->Right = NULL;
+			Total++;
 		}
 	}
 	else
 	{
-		x = 1;
 		if (newNode->Code < T->Code)
 		{
-			T->Left = InsertNode(str1, str2, str3, str4, str5, str6, str7, str8, T->Left, x);
+			T->Left = InsertNode(str1, str2, str3, str4, str5, str6, str7, str8, T->Left);
 			if (height(T->Left) - height(T->Right) == 2)
 				if (newNode->Code < T->Left->Code)
 					T = SingleRotateWithLeft(T);
@@ -129,9 +125,9 @@ DataNode* DataTree::InsertNode(string str1,string str2, string str3, string str4
 					T = DoubleRotateWithLeft(T);
 		}
 		else
-			if (newNode->Code > T->Code) 
+			if (newNode->Code > T->Code)
 			{
-				T->Right = InsertNode(str1, str2, str3, str4, str5, str6, str7, str8, T->Right, x);
+				T->Right = InsertNode(str1, str2, str3, str4, str5, str6, str7, str8, T->Right);
 				if (height(T->Right) - height(T->Left) == 2)
 					if (newNode->Code > T->Right->Code)
 						T = SingleRotateWithRight(T);
@@ -150,17 +146,17 @@ DataNode* DataTree::PhoneDeleteNode(DataNode* n, long long PhoneNum)
 	if (n == NULL)
 		return n;
 
-	if ( PhoneNum < n->Code )
+	if (PhoneNum < n->Code)
 		n->Left = PhoneDeleteNode(n->Left, PhoneNum);
-	else if( PhoneNum > n->Code )
+	else if (PhoneNum > n->Code)
 		n->Right = PhoneDeleteNode(n->Right, PhoneNum);
 	// if same PhoneNumber, this is the target node to be deleted
 	else
 	{
 		// node with only one child or no child
-		if((n->Left == NULL) || (n->Right == NULL))
+		if ((n->Left == NULL) || (n->Right == NULL))
 		{
-			DataNode *Temp = n->Left ? n->Left : n->Right;
+			DataNode* Temp = n->Left ? n->Left : n->Right;
 
 			// No child case
 			if (Temp == NULL)
@@ -170,8 +166,9 @@ DataNode* DataTree::PhoneDeleteNode(DataNode* n, long long PhoneNum)
 			}
 			// One child case
 			else
-			*n = *Temp; // Copy the contents of the non-empty child
+				*n = *Temp; // Copy the contents of the non-empty child
 			delete Temp;
+			cout << "Phone Deleted" << endl;
 		}
 		else
 		{
@@ -193,12 +190,13 @@ DataNode* DataTree::PhoneDeleteNode(DataNode* n, long long PhoneNum)
 			// Delete the inorder successor
 			n->Right = PhoneDeleteNode(n->Right, Temp->Code);
 		}
+
 	}
 
 	// If the DataTree had only one node
 	// then return
 	if (n == NULL)
-	return n;
+		return n;
 
 	// Update height of the new Datanode
 	n->height = 1 + max(height(n->Left), height(n->Right));
@@ -231,7 +229,7 @@ DataNode* DataTree::PhoneDeleteNode(DataNode* n, long long PhoneNum)
 		n->Right = SingleRotateWithRight(n->Right);
 		return SingleRotateWithLeft(n);
 	}
-
+	//cout << "Phone Deleted" << endl;
 	return n;
 	//cout << "Time taken:" << (double)(clock() - tStart) / CLOCKS_PER_SEC << "s" << endl;
 }
@@ -328,8 +326,8 @@ DataNode* DataTree::PostOrderCountrySearch(DataNode* Target, string country)
 {
 	if (Target != NULL)
 	{
-		PostOrderTreeDeletion(Target->Left);
-		PostOrderTreeDeletion(Target->Right);
+		PostOrderCountrySearch(Target->Left, country);
+		PostOrderCountrySearch(Target->Right, country);
 
 		if (Target->Country == country)
 		{
@@ -341,7 +339,7 @@ DataNode* DataTree::PostOrderCountrySearch(DataNode* Target, string country)
 	return Target;
 }
 
-void DataTree::PhoneSearch(DataNode* Target,long long PhoneNum)
+void DataTree::PhoneSearch(DataNode* Target, long long PhoneNum)
 {
 	clock_t tStart = clock();
 	if (Target != NULL)
@@ -349,12 +347,11 @@ void DataTree::PhoneSearch(DataNode* Target,long long PhoneNum)
 		if (Target->Code == PhoneNum)
 		{
 			cout << Target->ID << "\t" << Target->JobTitle << "\t" << Target->EmailAddress << "\t" << Target->LastName << "\t"
-				 << Target->FirstName << "\t" << Target->PhoneNumber << "\t" << Target->Skills << "\t" << Target->Country << "\n";
+				<< Target->FirstName << "\t" << Target->PhoneNumber << "\t" << Target->Skills << "\t" << Target->Country << "\n";
 		}
-		PhoneSearch(Target->Left,PhoneNum);
-		PhoneSearch(Target->Right,PhoneNum);
+		PhoneSearch(Target->Left, PhoneNum);
+		PhoneSearch(Target->Right, PhoneNum);
 	}
-	//cout << "Time taken:" << (double)(clock() - tStart) / CLOCKS_PER_SEC << "s" << endl;
 }
 
 void DataTree::SkillsSearch(DataNode* Target, string skills)
@@ -413,7 +410,7 @@ void DataTree::DoubleSearchPhone(DataNode* Target, long long PhoneNum, string st
 	int control = 0;
 	if (Target != NULL)
 	{
-		switch(choice)
+		switch (choice)
 		{
 		case 5:
 			if (Target->Code == PhoneNum && Target->Skills == str)
@@ -494,11 +491,13 @@ void DataTree::DoubleSearchXPhone(DataNode* Target, string str1, string str2, in
 void DataTree::PostOrderTreeDeletion(DataNode* Target)
 {
 	clock_t tStart = clock();
+
 	if (Target != NULL)
 	{
 		PostOrderTreeDeletion(Target->Left);
 		PostOrderTreeDeletion(Target->Right);
-		delete Target;
+		//cout << "Phone number: " << Target->PhoneNumber << endl;
+		free(Target);
 		DeleteTotal++;
 	}
 	//cout << "Time taken:" << (double)(clock() - tStart) / CLOCKS_PER_SEC << "s" << endl;
